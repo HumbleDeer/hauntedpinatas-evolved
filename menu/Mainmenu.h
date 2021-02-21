@@ -13,8 +13,12 @@ class MainMenu
         virtual ~MainMenu();
 
         void draw(sf::RenderWindow &window);
+
         void moveLeft();
         void moveRight();
+
+        sf::Color menuText_Static;
+        sf::Color menuText_Active;
 
     private:
         int selectedItemIndex;
@@ -24,8 +28,7 @@ class MainMenu
         sf::Font menuFont_Text;
         sf::Text menuText[MAX_NUMBER_OF_ITEMS];
 
-        sf::Color menuText_Static; //Normal text colour
-        sf::Color menuText_Active; //Active/hover text colour
+
 
         sf::Texture menuTexture_Start;
         sf::Sprite menuObject_Start;

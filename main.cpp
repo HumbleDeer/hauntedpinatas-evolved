@@ -10,7 +10,8 @@
 int main()
 {
     // Create the main window
-    sf::RenderWindow pinatas(sf::VideoMode(700, 550), "Haunted Piñatas Evolved", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
+    sf::RenderWindow pinatas(sf::VideoMode(700, 550), "Haunted Piñatas Evolved", sf::Style::Titlebar | sf::Style::Close);
+    pinatas.setKeyRepeatEnabled(false);
 
     MainMenu mainMenu(pinatas.getSize().x, pinatas.getSize().y);
 
@@ -21,11 +22,6 @@ int main()
     sf::Texture playerTexture;
     playerTexture.loadFromFile("assets/sprites/player/playersprite_back.png");
     sf::Sprite playerSprite(playerTexture);
-
-    //The start menu image
-    sf::Texture menuTexture_Start;
-    menuTexture_Start.loadFromFile("assets/menus/menutexture-start.jpg");
-    sf::Sprite menuObject_Start(menuTexture_Start);
 
     // Load the window icon
     sf::Image window_icon;
@@ -72,12 +68,22 @@ int main()
             case sf::Event::Closed:
                 pinatas.close();
                 break;
-            case sf::Event::Resized:
-                std::cout << "Event: Window Resize: " << gameEvent.size.width << "x" << gameEvent.size.height << "\n";
-                break;
+
             case sf::Event::KeyPressed:
-                if(gameEvent.key.code == sf::Keyboard::Key::P)
+                switch(gameEvent.key.code)
                 {
+                case sf::Keyboard::Left:
+                    if(isPaused) mainMenu.moveLeft();
+                    break;
+                case sf::Keyboard::Right:
+                    if(isPaused) mainMenu.moveRight();
+                    break;
+                case sf::Keyboard::Escape:
+                    break;
+                case sf::Keyboard::Pause:
+                    break;
+                case sf::Keyboard::P:
+                    //Swap game & menu state
                     isPaused = !isPaused;
                     if(!isPaused)
                     {
@@ -91,10 +97,16 @@ int main()
                         music_Game.pause();
                         std::cout << "Unpaused";
                     }
+                case sf::Keyboard::Unknown:
+                    std::cout << "Unknown key was released\n";
+                    break;
+                default:
+                    std::cout << "Unused key pressed";
                     break;
                 }
             default:
                 std::cout << "Unused key pressed";
+                break;
             }
         }
         //Check for player input, move the sprite around. Ignore this when paused.
