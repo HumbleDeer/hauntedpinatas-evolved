@@ -5,12 +5,14 @@
 
 #include <iostream>
 #include "main.h"
+#include "menu/Mainmenu.h"
 
 int main()
 {
     // Create the main window
     sf::RenderWindow pinatas(sf::VideoMode(700, 550), "Haunted Piñatas Evolved", sf::Style::Titlebar | sf::Style::Close | sf::Style::Resize);
 
+    MainMenu mainMenu(pinatas.getSize().x, pinatas.getSize().y);
 
     //Gameplay variables
     double playerSpeed = 0.75; //Playerspeed multiplier
@@ -23,13 +25,12 @@ int main()
     //The start menu image
     sf::Texture menuTexture_Start;
     menuTexture_Start.loadFromFile("assets/menus/menutexture-start.jpg");
-    sf::Sprite menuObject_Start (menuTexture_Start);
+    sf::Sprite menuObject_Start(menuTexture_Start);
 
     // Load the window icon
     sf::Image window_icon;
     window_icon.loadFromFile("assets/icon.png");
     pinatas.setIcon(24, 24, window_icon.getPixelsPtr());
-
 
     //Make sound objects
     // Declare a new music
@@ -41,7 +42,21 @@ int main()
         std::cout << "A sound file failed to load.";
     }
     music_Menu.play();
+    music_Menu.setLoop(true);
     music_Game.setLoop(true);
+
+    // Declare a new sound buffer
+    sf::SoundBuffer buffer;
+// Load it from a file
+    if (!buffer.loadFromFile("assets/sound/"))
+    {
+        // error...
+    }
+// Create a sound source and bind it to the buffer
+    sf::Sound sound1;
+    sound1.setBuffer(buffer);
+// Play the sound
+    sound1.play();
 
     std::cout << "Playerspeed multiplier is " << playerSpeed << "x\n";
 
@@ -61,22 +76,25 @@ int main()
                 std::cout << "Event: Window Resize: " << gameEvent.size.width << "x" << gameEvent.size.height << "\n";
                 break;
             case sf::Event::KeyPressed:
-                if(gameEvent.key.code == sf::Keyboard::Key::Escape)
+                if(gameEvent.key.code == sf::Keyboard::Key::P)
                 {
-                    std::cout << "Escape was pressed";
                     isPaused = !isPaused;
                     if(!isPaused)
                     {
                         music_Menu.stop();
                         music_Game.play();
+                        std::cout << "Paused";
                     }
                     else
                     {
                         music_Menu.play();
                         music_Game.pause();
+                        std::cout << "Unpaused";
                     }
                     break;
                 }
+            default:
+                std::cout << "Unused key pressed";
             }
         }
         //Check for player input, move the sprite around. Ignore this when paused.
@@ -144,7 +162,7 @@ int main()
         //Draw pause or game items
         if(isPaused)
         {
-            pinatas.draw(menuObject_Start);
+            mainMenu.draw(pinatas);
         }
         else
         {
