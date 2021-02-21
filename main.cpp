@@ -15,40 +15,33 @@ int main()
     //Gameplay variables
     double playerSpeed = 0.75; //Playerspeed multiplier
 
-    //Create textures
+    //Player sprite
     sf::Texture playerTexture;
-    sf::Texture menuTexture_Start; //The start menu image
-
-    //Create sound buffers
-
-
-    //Assign texture files
-    menuTexture_Start.loadFromFile("assets/menus/menutexture-start.jpg");
-    playerTexture.loadFromFile("sprites/player/playersprite_back.png");
-
-    //Assign audio buffers
-
-    /*if (!music_Game.loadFromFile("sound.wav"))
-        return -1;*/
-
-    //Create sprites & assign textures
+    playerTexture.loadFromFile("assets/sprites/player/playersprite_back.png");
     sf::Sprite playerSprite(playerTexture);
+
+    //The start menu image
+    sf::Texture menuTexture_Start;
+    menuTexture_Start.loadFromFile("assets/menus/menutexture-start.jpg");
     sf::Sprite menuObject_Start (menuTexture_Start);
+
+    // Load the window icon
+    sf::Image window_icon;
+    window_icon.loadFromFile("assets/icon.png");
+    pinatas.setIcon(24, 24, window_icon.getPixelsPtr());
+
 
     //Make sound objects
     // Declare a new music
     sf::Music music_Menu;
     sf::Music music_Game;
     // Open it from an audio file
-    if (!music_Menu.openFromFile("assets/sound/titlescreen-music.ogg") && !music_Game.openFromFile("assets/sound/game-music.ogg"))
+    if (!music_Menu.openFromFile("assets/sound/titlescreen-music.ogg") || !music_Game.openFromFile("assets/sound/game-music.ogg"))
     {
-        // error...
+        std::cout << "A sound file failed to load.";
     }
     music_Menu.play();
-    // Load the window icon
-    sf::Image window_icon;
-    window_icon.loadFromFile("icon.png");
-    pinatas.setIcon(24, 24, window_icon.getPixelsPtr());
+    music_Game.setLoop(true);
 
     std::cout << "Playerspeed multiplier is " << playerSpeed << "x\n";
 
@@ -80,7 +73,7 @@ int main()
                     else
                     {
                         music_Menu.play();
-                        music_Game.stop();
+                        music_Game.pause();
                     }
                     break;
                 }
@@ -95,25 +88,25 @@ int main()
                 {
                     // Move up
                     playerSprite.move((playerSpeed * 0.0f), (playerSpeed * -0.1f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_back.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_back.png");
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
                 {
                     // Move down
                     playerSprite.move((playerSpeed * 0.0f), (playerSpeed * 0.1f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_front.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_front.png");
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
                 {
                     // Move left
                     playerSprite.move((playerSpeed * -0.1f), (playerSpeed * 0.0f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_left.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_left.png");
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
                 {
                     // Move right
                     playerSprite.move((playerSpeed * 0.1f), (playerSpeed * 0.0f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_right.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_right.png");
                 }
             }
             else
@@ -122,25 +115,25 @@ int main()
                 {
                     // Move up
                     playerSprite.move((playerSpeed * 0.0f), (playerSpeed * -0.1f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_back.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_back.png");
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
                 {
                     // Move down
                     playerSprite.move((playerSpeed * 0.0f), (playerSpeed * 0.1f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_front.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_front.png");
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
                 {
                     // Move left
                     playerSprite.move((playerSpeed * -0.1f), (playerSpeed * 0.0f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_left.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_left.png");
                 }
                 if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
                 {
                     // Move right
                     playerSprite.move((playerSpeed * 0.1f), (playerSpeed * 0.0f));
-                    playerTexture.loadFromFile("sprites/player/playersprite_right.png");
+                    playerTexture.loadFromFile("assets/sprites/player/playersprite_right.png");
                 }
             }
         }
