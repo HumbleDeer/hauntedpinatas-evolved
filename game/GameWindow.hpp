@@ -2,8 +2,9 @@
 #define SCREEN_2_HPP
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
-#include "cScreen.hpp"
+#include "../cScreen.hpp"
 
 
 
@@ -22,6 +23,8 @@ private:
 
     sf::Sprite PlayerSprite;
     sf::Sprite PlayerAnimateSprite[4];
+
+    sf::Music game_music;
 
     bool moveUp = false;
     bool moveDown = false;

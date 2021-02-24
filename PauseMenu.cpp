@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "PauseMenu.hpp"
 
 PauseMenu::PauseMenu(void)
@@ -6,12 +5,16 @@ PauseMenu::PauseMenu(void)
     alpha_max = 3 * 255;
     alpha_div = 3;
     playing = false;
+    pause_music.openFromFile("assets/sound/titlescreen-music.ogg");
+    pause_music.setLoop(true);
 }
 
 int PauseMenu::Run(sf::RenderWindow &App)
 {
     sf::Event Event;
     bool Running = true;
+    if(pause_music.getStatus() == sf::Music::Status::Stopped)
+        pause_music.play();
 
     sf::Text Menu[5];
     sf::Color TextNormal = sf::Color(45,45,120);
@@ -50,7 +53,7 @@ int PauseMenu::Run(sf::RenderWindow &App)
     Menu[2].setFont(ButtonFont);
     Menu[2].setString("Continue");
     Menu[2].setCharacterSize(52);
-    Menu[2].setOutlineColor(TextNormal);
+    Menu[2].setOutlineColor(TextActive);
     Menu[2].setOutlineThickness(2);
     Menu[2].setPosition(sf::Vector2f((App.getSize().x / 2) - (Menu[2].getLocalBounds().width / 2),
                                      App.getSize().y / 1.5)
@@ -75,6 +78,8 @@ int PauseMenu::Run(sf::RenderWindow &App)
                             ((App.getSize().x / (4)*0) + (App.getSize().x / (4 * 2)) *1) - (Menu[4].getLocalBounds().width / 2),
                             App.getSize().y / 1.325)
                        );
+
+
 
     while (Running)
     {
@@ -121,50 +126,43 @@ int PauseMenu::Run(sf::RenderWindow &App)
                     if (menuIndex == 1 || menuIndex == 2)
                     {
                         playing = true;
+                        pause_music.stop();
                         return (2); //--> Go to screen 1 (Game)
 
                     }else if (menuIndex == 4){
+
                         return (1); //--> Go to screen 2 (Help)
                     }
                     else if (menuIndex == 3)
                     {
                         App.close();
-                        std::cout << "Goodbye!";
+                        return (-1);
                     }
                     else{return (-1);}
                     break;
+                case sf::Keyboard::Escape:
+                    if(playing){ //If the game is already started, Escape will return you to the game immediately.
+                        pause_music.stop();
+                        return (2);
+                    }else{
+                    Menu[1].setOutlineColor(TextNormal);
+                    Menu[2].setOutlineColor(TextNormal);
+                    Menu[3].setOutlineColor(TextActive);
+                    Menu[4].setOutlineColor(TextNormal);
+                    menuIndex = 3;
+                    }
+
+                    std::cout << menuIndex <<std::endl;
+                    break;
                 default:
+                    std::cout << "Unused key";
                     break;
                 }
             }
         }
         Sprite.setColor(sf::Color(255, 255, 255, 255));
-        /*
-        if (menuIndex == 0) //if menu index is on play
-        {
-            Menu[1].setColor(sf::Color(255, 0, 0, 255)); //Play Red (if game closed)
-            Menu[2].setColor(sf::Color(255, 255, 255, 255)); //Unselected, white, Exit
-            Menu[3].setColor(sf::Color(255, 0, 0, 255)); //Continue Red (if game open)
-            Menu[4].setColor(sf::Color(255, 255, 255, 255)); //Unselected, white, Help
-        }
-        else if (menu == 2) //Exit
-        {
-            Menu[1].setColor(sf::Color(255, 255, 255, 255)); //Unselected, Play Red (if game closed)
-            Menu[2].setColor(sf::Color(255, 0, 0, 255)); //Exit, White
-            Menu[3].setColor(sf::Color(255, 255, 255, 2555)); //Continue Red (if game open)
-            Menu[4].setColor(sf::Color(255, 255, 255, 255)); //Unselected, white, Help
-        }
-        else if (menu == 4) //help
-        {
-            Menu[1].setColor(sf::Color(255, 255, 255, 255)); //Unselected, Play Red (if game closed)
-            Menu[2].setColor(sf::Color(255, 255, 255, 255)); //Exit, White
-            Menu[3].setColor(sf::Color(255, 255, 255, 2555)); //Continue Red (if game open)
-            Menu[4].setColor(sf::Color(255, 0, 0, 255)); //Unselected, white, Help
-        }*/
 
-        //Clearing screen
         App.clear();
-        //Drawing
         App.draw(Sprite);
 
         if (playing)

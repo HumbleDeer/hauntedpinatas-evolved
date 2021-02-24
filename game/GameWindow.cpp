@@ -1,4 +1,3 @@
-#include <SFML/Graphics.hpp>
 #include "GameWindow.hpp"
 
 //Variables available to GameWindow class in general.
@@ -16,15 +15,19 @@ GameWindow::GameWindow(void)
     PlayerSprite.setTexture(PlayerStaticTexture[0]);
     PlayerSprite.setColor(sf::Color(255,255,255,255));
 
+    game_music.openFromFile("assets/sound/game-music.ogg");
 }
 
 int GameWindow::Run(sf::RenderWindow &App)
 {
-    sf::Event Event;
-    bool Running = true;
+
+    if(game_music.getStatus() == sf::Music::Status::Stopped || sf::Music::Status::Paused)
+        game_music.play();
 
     PlayerSprite.setPosition((App.getSize().x/2)-PlayerSprite.getGlobalBounds().width/2,(App.getSize().y/4)*3);
 
+    sf::Event Event;
+    bool Running = true;
     while (Running)
     {
         //Verifying events
@@ -41,6 +44,7 @@ int GameWindow::Run(sf::RenderWindow &App)
                 switch (Event.key.code)
                 {
                 case sf::Keyboard::Escape:
+                    game_music.pause();
                     return (0);
                     break;
                 case sf::Keyboard::W:

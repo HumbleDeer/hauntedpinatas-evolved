@@ -12,7 +12,7 @@ int main(int argc, char** argv)
 	int screen = 0;
 	// Create the main window
     sf::RenderWindow App(sf::VideoMode(700, 550, 32), "Haunted Piñatas Evolved", sf::Style::Titlebar | sf::Style::Close);
-    sf::View AppView(sf::Vector2f(0.0f, 0.0f),sf::Vector2f())
+    sf::View AppView(sf::Vector2f(0.0f, 0.0f),sf::Vector2f());
 
 	//Mouse cursor no more visible
 	//App.setMouseCursorVisible(false);

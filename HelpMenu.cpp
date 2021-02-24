@@ -38,7 +38,7 @@ int HelpMenu::Run(sf::RenderWindow &App)
 
         Title.setCharacterSize(58);
         Title.setString("Haunted Piñatas");
-        Title.setColor(sf::Color::White);
+        Title.setFillColor(sf::Color::White);
         Title.setFont(TitleFont);
         Title.setPosition(sf::Vector2f((App.getSize().x / 2) - (Title.getLocalBounds().width / 2),
                                      80

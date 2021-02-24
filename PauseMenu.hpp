@@ -2,6 +2,7 @@
 #define SCREEN_0_H
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "cScreen.hpp"
 
@@ -18,6 +19,7 @@ private:
     sf::Font TitleFont;
 public:
 	PauseMenu(void);
+	sf::Music pause_music;
 	virtual int Run(sf::RenderWindow &App);
 };
 
