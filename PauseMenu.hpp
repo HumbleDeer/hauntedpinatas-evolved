@@ -11,6 +11,11 @@ private:
 	int alpha_max;
 	int alpha_div;
 	bool playing;
+
+	sf::Texture Texture;
+    sf::Sprite Sprite;
+    sf::Font ButtonFont;
+    sf::Font TitleFont;
 public:
 	PauseMenu(void);
 	virtual int Run(sf::RenderWindow &App);
