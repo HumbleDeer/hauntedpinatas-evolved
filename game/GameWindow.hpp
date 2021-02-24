@@ -1,5 +1,5 @@
-#ifndef SCREEN_1_HPP
-#define SCREEN_1_HPP
+#ifndef SCREEN_2_HPP
+#define SCREEN_2_HPP
 
 #include <SFML/Graphics.hpp>
 #include <iostream>
@@ -17,6 +17,9 @@ private:
     sf::Texture PlayerAnimateTexture[4];
     sf::Texture PinataTexture[4];
 
+    sf::RectangleShape Player;
+    sf::RectangleShape Pinata;
+
     sf::Sprite PlayerSprite;
     sf::Sprite PlayerAnimateSprite[4];
 
@@ -30,4 +33,4 @@ public:
     virtual int Run(sf::RenderWindow &App);
 };
 
-#endif // SCREEN_1_HPP
+#endif // SCREEN_2_HPP

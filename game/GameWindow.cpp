@@ -1,11 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include "GameWindow.hpp"
-#include "Player.hpp"
 
 //Variables available to GameWindow class in general.
 GameWindow::GameWindow(void)
 {
-    PlayerSpeed = 0.75;
+    PlayerSpeed = 0.45;
 
     //Setting sprite
     //RoomTexture.loadFromFile("/textures/room.jpg");
@@ -16,12 +15,15 @@ GameWindow::GameWindow(void)
 
     PlayerSprite.setTexture(PlayerStaticTexture[0]);
     PlayerSprite.setColor(sf::Color(255,255,255,255));
+
 }
 
 int GameWindow::Run(sf::RenderWindow &App)
 {
     sf::Event Event;
     bool Running = true;
+
+    PlayerSprite.setPosition((App.getSize().x/2)-PlayerSprite.getGlobalBounds().width/2,(App.getSize().y/4)*3);
 
     while (Running)
     {
@@ -41,32 +43,36 @@ int GameWindow::Run(sf::RenderWindow &App)
                 case sf::Keyboard::Escape:
                     return (0);
                     break;
-                case sf::Keyboard::Up:
+                case sf::Keyboard::W:
                     moveUp = true;
                     /*moveDown = false;*/
                     moveLeft = false;
                     moveRight = false;
+                    PlayerSprite.setTexture(PlayerStaticTexture[0]);
                     std::cout << "Move up: " << moveUp <<std::endl;
                     break;
-                case sf::Keyboard::Down:
+                case sf::Keyboard::S:
                     /*moveUp = false;*/
                     moveDown = true;
                     moveLeft = false;
                     moveRight = false;
+                    PlayerSprite.setTexture(PlayerStaticTexture[3]);
                     std::cout << "Move down: " << moveDown <<std::endl;
                     break;
-                case sf::Keyboard::Left:
+                case sf::Keyboard::A:
                     moveUp = false;
                     moveDown = false;
                     moveLeft = true;
                     /*moveRight = false;*/
+                    PlayerSprite.setTexture(PlayerStaticTexture[1]);
                     std::cout << "Move left: " << moveLeft <<std::endl;
                     break;
-                case sf::Keyboard::Right:
+                case sf::Keyboard::D:
                     moveUp = false;
                     moveDown = false;
                     /*moveLeft = false;*/
                     moveRight = true;
+                    PlayerSprite.setTexture(PlayerStaticTexture[2]);
                     std::cout << "Move right: " << moveRight <<std::endl;
                     break;
                 default:
@@ -77,19 +83,19 @@ int GameWindow::Run(sf::RenderWindow &App)
             {
                 switch (Event.key.code)
                 {
-                case sf::Keyboard::Up:
+                case sf::Keyboard::W:
                     moveUp = false;
                     std::cout << "Move up: " << moveUp <<std::endl;
                     break;
-                case sf::Keyboard::Down:
+                case sf::Keyboard::S:
                     moveDown = false;
                     std::cout << "Move down: " << moveDown <<std::endl;
                     break;
-                case sf::Keyboard::Left:
+                case sf::Keyboard::A:
                     moveLeft = false;
                     std::cout << "Move left: " << moveLeft <<std::endl;
                     break;
-                case sf::Keyboard::Right:
+                case sf::Keyboard::D:
                     moveRight = false;
                     std::cout << "Move right: " << moveRight <<std::endl;
                     break;
